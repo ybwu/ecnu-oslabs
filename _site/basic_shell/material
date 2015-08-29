@@ -1,0 +1,18 @@
+0. shell usage
+1. editors: vim/nano
+2. gcc, gdb, make
+3. segmentfault/core dump
+4. diff
+5. unix as service
+
+http://www.grymoire.com/Unix/
+
+gdb:
+[1] http://rsquared.sdf.org/gdb/
+[2] http://moss.cs.iit.edu/cs351/gdb-inferiors.html
+
+security (why don't use system)
+[1] http://www.lst.de/~okir/blackhats/
+
+gcc:
+https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html
