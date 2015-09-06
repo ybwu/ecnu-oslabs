@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../../../css/github.css" type="text/css" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+<h1 id="project-0-linux-warm-up">Project 0: Linux Warm Up</h1>
+<h2 id="objective">Objective</h2>
+<p>This project is to help you getting familiar with Linux, which is, in fact, the operating system in the course title <strong>Operating System Labs</strong>. We will only cover two topics here, but we suggest that you play with it as much as you can. It is really fun and exciting. Although you will be stuck with this black annoying system at some point (almost surely), you can definitely learn something from this great software.</p>
+<h2 id="overview">Overview</h2>
+<p>We first give you two simple tasks, and you will try to accomplish them with a few lines of shell scripts. Understanding some basic commands (cd, cp, ...) and concepts (redirection, pipe ...) are important. In the second part, you will practice with the C programming environment (gcc compiler, gdb debugger), which will be your best friend in the rest of the semester.</p>
+<h2 id="readings">Readings</h2>
+<p>OSTEP <a href="http://pages.cs.wisc.edu/~remzi/OSTEP/lab-tutorial.pdf">Lab Tutorial</a></p>
+<h2 id="program-specifications">Program Specifications</h2>
+<h3 id="part-1">Part 1</h3>
+<p>You need to write two shell scripts, both of them should be executable in a Linux shell.</p>
+<ul>
+<li><p><code>s1.sh</code>:</p>
+<pre class="shell"><code>% ./s1.sh foo</code></pre>
+<p>The script first builds a new directory <code>foo</code> in the current directory (the one contains <code>sh1.sh</code>), then creates two files: &quot;name.txt&quot; containing your name; &quot;stno.txt&quot; containing your student number. Finally, it makes a copy of &quot;name.txt&quot; and &quot;stno.txt&quot; in the same directory of <code>foo</code>.</p></li>
+<li><p><code>s2.sh</code>:</p>
+<pre class="shell"><code>% ./s2.sh</code></pre>
+It generates a text file <code>output</code>. Each row of <code>output</code> represents a file in directory <code>/bin</code>, and contains three fields which are name, owner and permission of that file. The fields should be separated by white spaces. We further require that
+<ul>
+<li>All file names in <code>output</code> should start with letter &quot;b&quot; (other file names should be excluded)</li>
+<li>The file <code>output</code> is sorted by the file name field (in order of alphabet, from small to large)</li>
+<li>File <code>output</code> is read only for other users</li>
+</ul></li>
+</ul>
+<p>The following is an example of output</p>
+<pre><code>bacman root -rwxr-xr-x
+badblocks root -rwxr-xr-x
+baobab root -rwxr-xr-x
+base64 root -rwxr-xr-x
+basename root -rwxr-xr-x
+bash root -rwxr-xr-x
+bashbug root -r-xr-xr-x
+bayes.rb root -rwxr-xr-x
+bbox root -rwxr-xr-x</code></pre>
+<h3 id="part-2">Part 2</h3>
+<p>You need to compile/run a C program <a href="../src/set_operation.c">set_operation.c</a>. The program contains several simple bugs, and you are going to detect and correct them using the gdb debugger.</p>
+<p>Here are some details of the set_operation.c:</p>
+<ul>
+<li>It is designed for doing linked list operation to compute <span class="math inline">\((A-B)\cup(B-A)\)</span>, where <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are two sets input by users.</li>
+<li>The logic is very simple:
+<ul>
+<li>copy <span class="math inline">\(A\)</span> to a temporary set <span class="math inline">\(A_2\)</span></li>
+<li>compute <span class="math inline">\(A=A-B\)</span> and <span class="math inline">\(B=B-A_2\)</span></li>
+<li>union <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span></li>
+</ul></li>
+<li>There are two sub-functions: output and check
+<ul>
+<li>&quot;output&quot; is used to output all elements in a linked list</li>
+<li>&quot;check&quot; is used to check if an integer belongs to a linked list</li>
+</ul></li>
+</ul>
+<p>The program after being corrected should run as follows:</p>
+<pre><code>---------------------------------
+----Computing (A-B)union(B-A)----
+---------------------------------
+----input the number of elements of A: 3
+1-th element: 3
+2-th element: 4
+3-th element: 5
+----input the number of elements of B: 2
+1-th element: 1
+2-th element: 4
+---- elements of (A-B)union(B-A) ----
+1-th element: 3
+2-th element: 5
+3-th element: 1</code></pre>
+<h2 id="hints">Hints</h2>
+<h3 id="part-1-1">Part 1</h3>
+<ul>
+<li>In the first script, you can use <code>echo</code> and redirection to output some texts into a file.</li>
+<li>In the second script, you may use <code>xarg</code> (between <code>find</code> and <code>ls</code>) or pipe.</li>
+<li>For processing the text file, you can write a loop to read each line in and process them one by one. But, using <code>awk</code> maybe more convenient.</li>
+<li>To sort the data , you may use the command <code>sort</code>.</li>
+</ul>
+<p>When you need some details of a command, use <code>man</code>. Output some informations properly when scripts are running. For example, for the second script, show the number of the instances of the file when it is created.</p>
+<h3 id="part-2-1">Part 2</h3>
+<ul>
+<li>Set some breakpoints, especially at some important statements(for example, loop or logical control)</li>
+<li>Display some value of variables, such as the loop variables or the number in the linked list which is pointed at by the pointer currently.</li>
+</ul>
+<h2 id="hand-in">Hand In</h2>
+<ul>
+<li>two script files named <code>s1.sh</code> and <code>s2.sh</code>.</li>
+<li>source file after debugging and a lab report contains three parts:
+<ul>
+<li>A simple introduction of your project</li>
+<li>Summarize the commands and their usages, which were used in compiling and debugging.</li>
+<li>How you debugged the program (where are your breakpoints located, which variables you've watched, etc.) and the bugs you found.</li>
+</ul></li>
+</ul>
+<h2 id="general-advice">General Advice</h2>
+<p>Try to use and get familiar with the shell commands first. Make good use of &quot;man&quot;, &quot;help&quot; and &quot;--help&quot;.</p>
+<p>Start small, and get things working incrementally. For example, you can try to write some sub-functions in your script first, then test them before you combine them together. For debugging, you could build several test cases, and see why the running process of the program is different from your expectation.</p>
+</body>
+</html>
