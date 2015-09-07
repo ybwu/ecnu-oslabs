@@ -23,7 +23,7 @@ int check(int num, struct node *head){
   struct node *p;
   p=head;
   while(p!=NULL){
-    if((p->->next)number==num) 
+    if((p->->next)->number==num) 
       sign=1;
     p=p->next;  
   }
