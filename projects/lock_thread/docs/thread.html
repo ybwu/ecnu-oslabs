@@ -52,8 +52,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2 id="readings">Readings</h2>
 <p>OSTEP <a href="http://pages.cs.wisc.edu/~remzi/OSTEP/threads-api.pdf">Chapter 27</a>, <a href="http://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf">Chapter 28</a>, <a href="http://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks-usage.pdf">Chapter 29</a>.</p>
 <h2 id="part-1-spin-locks">Part 1: Spin Locks</h2>
-<p>To build a spin lock, you will use the x86 exchange primitive. As this is an assembly instruction, you will need be able to call it from C. Fortunately, gcc conveniently lets you do this without too much trouble: <a href="../src/xchg.c">xchg.c</a></p>
-<p>For those interested in learning more about calling assembly from C with gcc, see <a href="http://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html">here</a>.</p>
+<p>To build a spin lock, you will use the x86 exchange primitive. As this is an assembly instruction, you will need be able to call it from C. Fortunately, gcc conveniently lets you do this without too much trouble: <a href="../src/xchg.c">xchg.c</a>.</p>
+<p>For those interested in learning more about calling assembly from C with gcc, see <a href="http://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html">here</a> (Note that you may need to add the gcc option <code>-std=gnu99</code> since your code is no longer in ansi C).</p>
 <p>To learn more about this instruction, you should read about it in the Intel assembly instruction manual found <a href="http://www.intel.com/assets/pdf/manual/253666.pdf">here</a>. However, I bet you can figure it out without looking.</p>
 <p>The lock you build should define a <code>spinlock_t</code> data structure, which contains any values needed to build your lock, and two routines:</p>
 <div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">spinlock_acquire(spinlock_t *lock)
