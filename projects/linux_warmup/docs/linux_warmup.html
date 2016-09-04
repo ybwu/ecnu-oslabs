@@ -7,14 +7,17 @@
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
   <link rel="stylesheet" href="../../../css/github.css" type="text/css" />
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
 </head>
 <body>
 <h1 id="project-0-linux-warm-up">Project 0: Linux Warm Up</h1>
 <h2 id="objective">Objective</h2>
-<p>This project is to help you getting familiar with Linux, which is, in fact, the operating system in the course title <strong>Operating System Labs</strong>. We will only cover two topics here, but we suggest that you play with it as much as you can. It is really fun and exciting. Although you will be stuck with this black annoying system at some point (almost surely), you can definitely learn something from this great software.</p>
+<p>This project is to help you getting familiar with Linux, which is, in fact, the operating system in the course title <strong>Operating System Labs</strong>. We only cover several topics, but highly recommend you to play with it as much as possible.</p>
+<blockquote>
+<p>&quot;For the things we have to learn before we can do them, we learn by doing them.&quot;                                                 ― Aristotle, The Nicomachean Ethics</p>
+</blockquote>
 <h2 id="overview">Overview</h2>
-<p>We first give you two simple tasks, and you will try to accomplish them with a few lines of shell scripts. Understanding some basic commands (cd, cp, ...) and concepts (redirection, pipe ...) is important. In the second part, you will practise with the C programming environment (gcc compiler, gdb debugger), which will be your best friends in the rest of the semester.</p>
+<p>The project contains two subparts and two bonus problems. In part 1, you will write shell scripts to accomplish simple tasks. Understanding some basic shell commands (cd, cp, ...) and concepts (redirection, pipe ...) might be helpful. In part 2, you will practise with linux C programming environment (gcc compiler, gdb debugger, text editors). Finally, you can try some advanced text processing tools in bonus problems.</p>
 <h2 id="readings">Readings</h2>
 <p>OSTEP <a href="http://pages.cs.wisc.edu/~remzi/OSTEP/lab-tutorial.pdf">Lab Tutorial</a></p>
 <h2 id="program-specifications">Program Specifications</h2>
@@ -26,14 +29,14 @@
 <p>The script first builds a new directory <code>foo</code> in the current directory (the one contains <code>sh1.sh</code>), then creates two files: &quot;name.txt&quot; containing your name; &quot;stno.txt&quot; containing your student number. Finally, it makes a copy of &quot;name.txt&quot; and &quot;stno.txt&quot; in the same directory of <code>foo</code>.</p></li>
 <li><p><code>s2.sh</code>:</p>
 <pre class="shell"><code>% ./s2.sh</code></pre>
-It generates a text file <code>output</code>. Each row of <code>output</code> represents a file in directory <code>/bin</code>, and contains three fields which are name, owner and permission of that file. The fields should be separated by white spaces. We further require that
+It generates a text file <code>output</code>. Each row of <code>output</code> represents a file in directory <code>/bin</code>, and contains three fields which are name, owner and permission of that file. The fields should be separated by white spaces. Furthermore,
 <ul>
-<li>All file names in <code>output</code> should start with letter &quot;b&quot; (other file names should be excluded)</li>
+<li>All file names in <code>output</code> should start with letter &quot;b&quot; (other files should be excluded)</li>
 <li>The file <code>output</code> is sorted by the file name field (in order of alphabet, from small to large)</li>
-<li>File <code>output</code> is read only for other users</li>
+<li>The file <code>output</code> is read only for other users</li>
 </ul></li>
 </ul>
-<p>The following is an example of output</p>
+<p>Here is an example output</p>
 <pre><code>bacman root -rwxr-xr-x
 badblocks root -rwxr-xr-x
 baobab root -rwxr-xr-x
@@ -44,11 +47,10 @@ bashbug root -r-xr-xr-x
 bayes.rb root -rwxr-xr-x
 bbox root -rwxr-xr-x</code></pre>
 <h3 id="part-2">Part 2</h3>
-<p>You need to compile/run a C program <a href="../src/set_operation.c">set_operation.c</a>. The program contains several simple bugs, and you are going to detect and correct them using the gdb debugger.</p>
-<p>Here are some details of the set_operation.c:</p>
+<p>We have a C program <a href="../src/set_operation.c">set_operation.c</a>, which contains several implementation bugs. You will first try to compile/run the program, then detect and correct the bugs using the gdb debugger.</p>
 <ul>
-<li>It is designed for doing linked list operation to compute <span class="math inline">\((A-B)\cup(B-A)\)</span>, where <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are two sets input by users.</li>
-<li>The logic is very simple:
+<li>set_operation.c computes <span class="math inline">\((A-B)\cup(B-A)\)</span>, where <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are two sets input by users.</li>
+<li>The algorithm is simple:
 <ul>
 <li>copy <span class="math inline">\(A\)</span> to a temporary set <span class="math inline">\(A_2\)</span></li>
 <li>compute <span class="math inline">\(A=A-B\)</span> and <span class="math inline">\(B=B-A_2\)</span></li>
@@ -60,7 +62,7 @@ bbox root -rwxr-xr-x</code></pre>
 <li>&quot;check&quot; is used to check if an integer belongs to a linked list</li>
 </ul></li>
 </ul>
-<p>The program after being corrected should run as follows:</p>
+<p>A correct (bug-free) output should be:</p>
 <pre><code>---------------------------------
 ----Computing (A-B)union(B-A)----
 ---------------------------------
@@ -75,28 +77,52 @@ bbox root -rwxr-xr-x</code></pre>
 1-th element: 3
 2-th element: 5
 3-th element: 1</code></pre>
+<h3 id="bonus-1">Bonus 1</h3>
+<p>Using <code>awk</code> to print the 10th line of a file. For example, assume that a file has the following content:</p>
+<pre><code>Line 1
+Line 2
+Line 3
+Line 4
+Line 5
+Line 6
+Line 7
+Line 8
+Line 9
+Line 10</code></pre>
+<p>Your script should output the tenth line, which is:</p>
+<pre><code>Line 10</code></pre>
+<h3 id="bonus-2">Bonus 2</h3>
+<p>Given a text file, transpose its content. The file is in &quot;column format&quot;, which contains a bunch of rows, each row has a fixed number of columns, and the columns are separated by the '   ' character. For example, if a file has the following content:</p>
+<pre><code>name age
+alice 21
+ryan 30</code></pre>
+<p>Your script should output:</p>
+<pre><code>name alice ryan
+age 21 30</code></pre>
 <h2 id="hints">Hints</h2>
 <h3 id="part-1-1">Part 1</h3>
 <ul>
 <li>In the first script, you can use <code>echo</code> and redirection to output some texts into a file.</li>
-<li>In the second script, you may use <code>xarg</code> (between <code>find</code> and <code>ls</code>) or pipe.</li>
-<li>For processing the text file, you can write a loop to read each line in and process them one by one. But, using <code>awk</code> maybe more convenient.</li>
-<li>To sort the data , you may use the command <code>sort</code>.</li>
+<li>In the second script, you may use <code>xargs</code> (between <code>find</code> and <code>ls</code>) or pipe.</li>
+<li>For text files, you can read lines with a loop. Or you may choose to use <code>awk</code>.</li>
+<li>To sort the data, see command <code>sort</code>.</li>
+<li>Print some information for debugging.</li>
+<li>Use <code>man</code> to get detail usages of commands.</li>
 </ul>
-<p>When you need some details of a command, use <code>man</code>. Output some informations properly when scripts are running. For example, for the second script, show the number of the instances of the file when it is created.</p>
 <h3 id="part-2-1">Part 2</h3>
 <ul>
-<li>Set some breakpoints, especially at some important statements(for example, loop or logical control)</li>
-<li>Display some value of variables, such as the loop variables or the number in the linked list which is pointed at by the pointer currently.</li>
+<li>Set breakpoints around important statements (e.g., loop, if)</li>
+<li>Print out values of variables (e.g., loop variables, contents of pointers).</li>
 </ul>
 <h2 id="hand-in">Hand In</h2>
 <ul>
-<li>two script files named <code>s1.sh</code> and <code>s2.sh</code>.</li>
-<li>source file after debugging and a lab report contains three parts:
+<li>The two script files <code>s1.sh</code> and <code>s2.sh</code>.</li>
+<li>The source file set_operation.c after debugging.</li>
+<li>A lab report contains:
 <ul>
 <li>A simple introduction of your project</li>
-<li>Summarize the commands and their usages, which were used in compiling and debugging.</li>
-<li>How you debugged the program (where are your breakpoints located, which variables you've watched, etc.) and the bugs you found.</li>
+<li>For part 1, explain the shell commands in your scripts (e.g., usage, options).</li>
+<li>For part 2, explain the meaning of gcc options for compiling your program. Explain the detailed process of debugging (where are your breakpoints located, which variables you've watched, etc.) and the bugs you found.</li>
 </ul></li>
 </ul>
 <h2 id="general-advice">General Advice</h2>
