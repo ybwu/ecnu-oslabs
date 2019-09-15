@@ -5,16 +5,16 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>sort</title>
-  <style type="text/css">
+  <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <style type="text/css">
+  <style>
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -27,13 +27,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -82,7 +80,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <![endif]-->
 </head>
 <body>
-<h1 id="project-1-sorting">Project 1: Sorting</h1>
+<h1 id="project-0b-sorting">Project 0b: Sorting</h1>
 <h2 id="overview">Overview</h2>
 <p>You will write a simple sorting program. This program should be invoked as follows:</p>
 <pre class="shell"><code>% ./fastsort inputfile outputfile</code></pre>
@@ -115,9 +113,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><em>Too few or many arguments passed to program</em>: If the user runs fastsort without any arguments, or in some other way passes incorrect flags and such to fastsort, print <code>Usage: fastsort inputfile outputfile</code> and exit.</li>
 </ul>
 <p><strong>Important</strong>: On any error code, you should print the error to the screen using <code>fprintf()</code>, and send the error message to <code>stderr</code> (standard error) and <strong>not</strong> <code>stdout</code> (standard output). This is accomplished in your C code as follows:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb5-1" data-line-number="1">fprintf(stderr, “whatever the error message is\n”);</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb5-1" title="1">fprintf(stderr, “whatever the error message is\n”);</a></code></pre></div>
 <h2 id="hand-in">Hand In</h2>
-<p>You should hand in only one source file: <code>fastsort.c</code> (without the &quot;.o&quot; file).</p>
+<p>You should hand in only one source file: <code>fastsort.c</code> (without the ".o" file).</p>
 <h2 id="general-advice">General Advice</h2>
 <p>Start small, and get things working incrementally. For example, first get a program that simply reads in the input file, one line at a time, and prints out what it reads in. Then, slowly add features and test them as you go.</p>
 <p>Testing is critical. One great programmer I once knew said you have to write 5-10 lines of test code for every line of code you produce; testing your code to make sure it works is crucial. Write tests to see if your code handles all the cases you think it should. Be as comprehensive as you can be. Of course, when grading your projects, we will be. Thus, it is better if you find your bugs first, before we do.</p>

@@ -1,20 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <link rel="stylesheet" href="../../../css/github.css" type="text/css" />
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>linux_warmup</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../../../css/github.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<h1 id="project-0-linux-warm-up">Project 0: Linux Warm Up</h1>
+<h1 id="project-0a-linux-warm-up">Project 0a: Linux Warm Up</h1>
 <h2 id="objective">Objective</h2>
 <p>This project is to help you getting familiar with Linux, which is, in fact, the operating system in the course title <strong>Operating System Labs</strong>. We only cover several topics, but highly recommend you to play with it as much as possible.</p>
 <blockquote>
-<p>&quot;For the things we have to learn before we can do them, we learn by doing them.&quot;                                                 ― Aristotle, The Nicomachean Ethics</p>
+<p>"For the things we have to learn before we can do them, we learn by doing them."                                                 ― Aristotle, The Nicomachean Ethics</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
 <p>The project contains two subparts and two bonus problems. In part 1, you will write shell scripts to accomplish simple tasks. Understanding some basic shell commands (cd, cp, ...) and concepts (redirection, pipe ...) might be helpful. In part 2, you will practise with linux C programming environment (gcc compiler, gdb debugger, text editors). Finally, you can try some advanced text processing tools in bonus problems.</p>
@@ -24,18 +31,15 @@
 <h3 id="part-1">Part 1</h3>
 <p>You need to write two shell scripts, both of them should be executable in a Linux shell.</p>
 <ul>
-<li><p><code>s1.sh</code>:</p>
-<pre class="shell"><code>% ./s1.sh foo</code></pre>
-<p>The script first builds a new directory <code>foo</code> in the current directory (the one contains <code>s1.sh</code>), then creates two files: &quot;name.txt&quot; containing your name; &quot;stno.txt&quot; containing your student number. Finally, it makes a copy of &quot;name.txt&quot; and &quot;stno.txt&quot; in the same directory of <code>foo</code>.</p></li>
-<li><p><code>s2.sh</code>:</p>
-<pre class="shell"><code>% ./s2.sh</code></pre>
-It generates a text file <code>output</code>. Each row of <code>output</code> represents a file in directory <code>/bin</code>, and contains three fields which are name, owner and permission of that file. The fields should be separated by white spaces. Furthermore,
-<ul>
-<li>All file names in <code>output</code> should start with letter &quot;b&quot; (other files should be excluded)</li>
-<li>The file <code>output</code> is sorted by the file name field (in order of alphabet, from small to large)</li>
-<li>The file <code>output</code> is read only for other users</li>
-</ul></li>
+<li><code>s1.sh</code>:</li>
 </ul>
+<pre class="shell"><code>% ./s1.sh foo</code></pre>
+<p>The script first builds a new directory <code>foo</code> in the current directory (the one contains <code>s1.sh</code>), then creates two files: "name.txt" containing your name; "stno.txt" containing your student number. Finally, it makes a copy of "name.txt" and "stno.txt" in the same directory of <code>foo</code>.</p>
+<ul>
+<li><code>s2.sh</code>:</li>
+</ul>
+<pre class="shell"><code>% ./s2.sh</code></pre>
+<p>It generates a text file <code>output</code>. Each row of <code>output</code> represents a file in directory <code>/bin</code>, and contains three fields which are name, owner and permission of that file. The fields should be separated by white spaces. Furthermore, - All file names in <code>output</code> should start with letter "b" (other files should be excluded) - The file <code>output</code> is sorted by the file name field (in order of alphabet, from small to large) - The file <code>output</code> is read only for other users</p>
 <p>Here is an example output</p>
 <pre><code>bacman root -rwxr-xr-x
 badblocks root -rwxr-xr-x
@@ -49,17 +53,17 @@ bbox root -rwxr-xr-x</code></pre>
 <h3 id="part-2">Part 2</h3>
 <p>We have a C program <a href="../src/set_operation.c">set_operation.c</a>, which contains several implementation bugs. You will first try to compile/run the program, then detect and correct the bugs using the gdb debugger.</p>
 <ul>
-<li>set_operation.c computes <span class="math inline">\((A-B)\cup(B-A)\)</span>, where <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are two sets input by users.</li>
+<li>set_operation.c computes $(A-B)\cup(B-A)$, where $A$ and $B$ are two sets input by users.</li>
 <li>The algorithm is simple:
 <ul>
-<li>copy <span class="math inline">\(A\)</span> to a temporary set <span class="math inline">\(A_2\)</span></li>
-<li>compute <span class="math inline">\(A=A-B\)</span> and <span class="math inline">\(B=B-A_2\)</span></li>
-<li>union <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span></li>
+<li>copy $A$ to a temporary set $A_2$</li>
+<li>compute $A=A-B$ and $B=B-A_2$</li>
+<li>union $A$ and $B$</li>
 </ul></li>
 <li>There are two sub-functions: output and check
 <ul>
-<li>&quot;output&quot; is used to output all elements in a linked list</li>
-<li>&quot;check&quot; is used to check if an integer belongs to a linked list</li>
+<li>"output" is used to output all elements in a linked list</li>
+<li>"check" is used to check if an integer belongs to a linked list</li>
 </ul></li>
 </ul>
 <p>A correct (bug-free) output should be:</p>
@@ -92,7 +96,7 @@ Line 10</code></pre>
 <p>Your script should output the tenth line, which is:</p>
 <pre><code>Line 10</code></pre>
 <h3 id="bonus-2">Bonus 2</h3>
-<p>Given a text file, transpose its content. The file is in &quot;column format&quot;, which contains a bunch of rows, each row has a fixed number of columns, and the columns are separated by the '   ' character. For example, if a file has the following content:</p>
+<p>Given a text file, transpose its content. The file is in "column format", which contains a bunch of rows, each row has a fixed number of columns, and the columns are separated by the '   ' character. For example, if a file has the following content:</p>
 <pre><code>name age
 alice 21
 ryan 30</code></pre>
@@ -126,7 +130,7 @@ age 21 30</code></pre>
 </ul></li>
 </ul>
 <h2 id="general-advice">General Advice</h2>
-<p>Try to use and get familiar with the shell commands first. Make good use of &quot;man&quot;, &quot;help&quot; and &quot;--help&quot;.</p>
+<p>Try to use and get familiar with the shell commands first. Make good use of "man", "help" and "--help".</p>
 <p>Start small, and get things working incrementally. For example, you can try to write some sub-functions in your script first, then test them before you combine them together. For debugging, you could build several test cases, and see why the running process of the program is different from your expectation.</p>
 </body>
 </html>
