@@ -81,6 +81,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </head>
 <body>
 <h1 id="project-1a-a-unix-shell">Project 1a: A Unix Shell</h1>
+<h2 id="updates">Updates</h2>
+<ul>
+<li><a href="../../../resources/pj2_test_samples.zip">here</a> are some test cases for your shell.</li>
+</ul>
 <h2 id="objectives">Objectives</h2>
 <p>There are three objectives to this assignment:</p>
 <ul>
@@ -221,7 +225,7 @@ some error printed here </code></pre>
 <p>Important: the list of arguments must be terminated with a NULL pointer; that is, argv[3] = NULL. We strongly recommend that you carefully check that you are constructing this array correctly!</p>
 <h3 id="built-in-commands-1">Built-in Commands</h3>
 <p>For the exit built-in command, you should simply call <code>exit()</code>. The corresponding process will exit, and the parent (i.e. your shell) will be notified.</p>
-<p>For managing the current working directory, you should use <code>getenv</code>, <code>chdir</code>, and <code>getcwd</code> . The <code>getenv()</code> call is useful when you want to go to your HOME directory. You do not have to manage the PWD environment variable. <code>getcwd()</code> system call is useful to know the current working directory; i.e. if a user types pwd, you simply call getcwd(). And finally, <code>chdir()</code> is useful for moving directories. Fore more, read the Advanced UNIX Programming book Chapter 4.22 and 7.9 .</p>
+<p>For managing the current working directory, you should use <code>getenv</code>, <code>chdir</code>, and <code>getcwd</code> . The <code>getenv()</code> call is useful when you want to go to your HOME directory. You do not have to manage the PWD environment variable. <code>getcwd()</code> system call is useful to know the current working directory; i.e. if a user types pwd, you simply call getcwd(). And finally, <code>chdir()</code> is useful for moving directories. For more details, read the Advanced UNIX Programming book Chapter 4.22 and 7.9 .</p>
 <h3 id="redirection-1">Redirection</h3>
 <p>Redirection is relatively easy to implement: just use <code>close()</code> on stdout and then <code>open()</code> on a file. You can also use <code>dup2()</code> system call which is safe for concurrency.</p>
 <p>With file descriptor, you can perform read and write to a file. Maybe in your life so far, you have only used <code>fopen()</code>, <code>fread()</code>, and <code>fwrite()</code> for reading and writing to a file. Unfortunately, these functions work on <code>FILE*</code> , which is more of a C library support; the file descriptors are hidden.</p>
@@ -250,7 +254,7 @@ some error printed here </code></pre>
  hello 2 world
  hello 1 world
  social 3 network</code></pre>
-<p>Then the output is 2. Can you figure out how does it work?</p>
+<p>Then the output is 2. Can you figure out how it works?</p>
 <p>To integrate pipe in your mysh, the idea is quite similar to redirection: you need to bind file descriptors <code>STDIN_FILENO</code> and <code>STDOUT_FILENO</code> properly before running a command. One key system call is <code>pipe()</code> which kindly creates the pipe for you (happy, yeah!). Again, details of <code>pipe</code> can be found in the man page, and also section 15.2 of Advanced UNIX Programming book. Read them, call <code>pipe()</code>, revisit redirection, make your pipe rock.</p>
 <h2 id="hand-in">Hand In</h2>
 <p>To ensure that we compile your C correctly for the demo, you will need to create a simple makefile; this way our scripts can just run make to compile your code with the right libraries and flags. If you don't know how to write a makefile, you might want to look at the man pages for make or better yet, read the tutorial.</p>
