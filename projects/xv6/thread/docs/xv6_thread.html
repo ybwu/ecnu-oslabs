@@ -81,6 +81,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </head>
 <body>
 <h1 id="project-4b-xv6-threads">Project 4b: xv6 Threads</h1>
+<h2 id="updates">Updates</h2>
+<p>Some test cases can be found <a href="../tests/project4btest.tar.gz">here</a></p>
 <h2 id="overview">Overview</h2>
 <p>In this project, you'll be adding real kernel threads to xv6. Sound like fun? Well, it should. Because you are on your way to becoming a real kernel hacker. And what could be more fun than that?</p>
 <p>Specifically, you'll do three things. First, you'll define a new system call to create a kernel thread, called <code>clone()</code>, as well as one to wait for a thread called <code>join()</code>. Then, you'll use <code>clone()</code> to build a little thread library, with a <code>thread_create()</code> and a <code>thread_join()</code>. Finally, you'll show these things work by using the TA's tests. That's it! And now, for some details.</p>
@@ -97,7 +99,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb3-1" title="1">thread_create(<span class="dt">void</span> (*start_routine)(<span class="dt">void</span>*), <span class="dt">void</span> *arg) </a></code></pre></div>
 <p>This routine should call <code>malloc()</code> to create a new user stack, use <code>clone()</code> to create the child thread and get it running. A paired routine</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb4-1" title="1"><span class="dt">int</span> thread_join() </a></code></pre></div>
-<p>call should also be used, which calls the underlying <code>join()</code> system call, frees the user stack, and then returns.</p>
+<p>should also be used, which calls the underlying <code>join()</code> system call, frees the user stack, and then returns.</p>
 <p>To test your code, use the TAs tests, as usual! But of course you should write your own little code snippets to test pieces as you go.</p>
 <p>One thing you need to be careful with is when an address space is grown by a thread in a multi-threaded process. Trace this code path carefully and see where a new lock is needed and what else needs to be updated to grow an address space in a multi-threaded process correctly.</p>
 <p>Have fun!</p>
