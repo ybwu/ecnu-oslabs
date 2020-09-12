@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>xv6_thread</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style>
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../../../css/github.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="project-4b-xv6-threads">Project 4b: xv6 Threads</h1>
+<h2 id="updates">Updates</h2>
+<p>Some test cases can be found <a href="../tests/project4btest.tar.gz">here</a></p>
+<h2 id="overview">Overview</h2>
+<p>In this project, you'll be adding real kernel threads to xv6. Sound like fun? Well, it should. Because you are on your way to becoming a real kernel hacker. And what could be more fun than that?</p>
+<p>Specifically, you'll do three things. First, you'll define a new system call to create a kernel thread, called <code>clone()</code>, as well as one to wait for a thread called <code>join()</code>. Then, you'll use <code>clone()</code> to build a little thread library, with a <code>thread_create()</code> and a <code>thread_join()</code>. Finally, you'll show these things work by using the TA's tests. That's it! And now, for some details.</p>
+<p><strong>Note</strong>: Start with a clean kernel; no need for your new fancy address space with the stack at the bottom, for example.</p>
+<h2 id="details">Details</h2>
+<p>Your new clone system call should look like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb1-1" title="1"><span class="dt">int</span> clone(<span class="dt">void</span>(*fcn)(<span class="dt">void</span>*), <span class="dt">void</span> *arg, <span class="dt">void</span> *stack) .</a></code></pre></div>
+<p>This call creates a new kernel thread which shares the calling process's address space. File descriptors are copied as in fork. The new process uses <strong>stack</strong> as its user stack, which is passed the given argument <strong>arg</strong> and uses a fake return PC (0xffffffff). The stack should be one page in size and page-aligned. The new thread starts executing at the address specified by <strong>fcn</strong>. As with fork(), the PID of the new thread is returned to the parent.</p>
+<p>Another new system call is</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" title="1"><span class="dt">int</span> join(<span class="dt">void</span> **stack) </a></code></pre></div>
+<p>This call waits for a child thread that shares the address space with the calling process. It returns the PID of waited-for child or -1 if none. The location of the child's user stack is copied into the argument <strong>stack</strong>.</p>
+<p>You also need to think about the semantics of a couple of existing system calls. For example, <code>int wait()</code> should wait for a child process that does not share the address space with this process. It should also free the address space if this is last reference to it. Finally, <code>exit()</code> should work as before but for both processes and threads; little change is required here.</p>
+<p>Your thread library will be built on top of this, and just have a simple routine</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb3-1" title="1">thread_create(<span class="dt">void</span> (*start_routine)(<span class="dt">void</span>*), <span class="dt">void</span> *arg) </a></code></pre></div>
+<p>This routine should call <code>malloc()</code> to create a new user stack, use <code>clone()</code> to create the child thread and get it running. A paired routine</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb4-1" title="1"><span class="dt">int</span> thread_join() </a></code></pre></div>
+<p>should also be used, which calls the underlying <code>join()</code> system call, frees the user stack, and then returns.</p>
+<p>To test your code, use the TAs tests, as usual! But of course you should write your own little code snippets to test pieces as you go.</p>
+<p>One thing you need to be careful with is when an address space is grown by a thread in a multi-threaded process. Trace this code path carefully and see where a new lock is needed and what else needs to be updated to grow an address space in a multi-threaded process correctly.</p>
+<p>Have fun!</p>
+<h2 id="hints">Hints</h2>
+<p>It might be good to read the xv6 book a bit.</p>
+<p>For preparing stacks for threads (what's on the stack when you make a function call, and how it all is manipulated), you need to know a bit about calling convensions of x86. The followint two links <a href="https://en.wikibooks.org/wiki/X86_Disassembly/Functions_and_Stack_Frames">1</a>, <a href="https://en.wikibooks.org/wiki/X86_Disassembly/Calling_Conventions">2</a> and the first few chapters of this book (<a href="http://download.savannah.gnu.org/releases/pgubook/ProgrammingGroundUp-1-0-booksize.pdf">Programming from the Ground Up</a>) might be userful.</p>
+<div id="footer">
+  Adapted from <a href="http://pages.cs.wisc.edu/~remzi/Classes/537/Fall2013/Projects/p4b.html"> WISC CS537 </a> by Remzi Arpaci-Dusseau 
+</div>
+</body>
+</html>
